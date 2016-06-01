@@ -71,6 +71,15 @@ git_get_info(vccontext_t *context)
            modifications */
         free_capture(capture);
     }
+    if (context->options->show_staged) {
+        //git diff --name-only --cached
+        int status = system("git diff --cached --no-ext-diff --quiet --exit-code");
+        if (WEXITSTATUS(status) == 1)       /* files modified */
+            result->staged = 1;
+        /* any other outcome (including failure to fork/exec,
+           failure to run git, or diff error): assume no
+           modifications */
+    }
     if (context->options->show_unknown) {
         char *argv[] = {
             "git", "ls-files", "--others", "--exclude-standard", NULL};

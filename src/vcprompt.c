@@ -112,6 +112,7 @@ parse_format(options_t *options)
     options->show_patch = 0;
     options->show_unknown = 0;
     options->show_modified = 0;
+    options->show_staged = 0;
 
     char *format = options->format;
     size_t len = strlen(format);
@@ -137,6 +138,9 @@ parse_format(options_t *options)
                     break;
                 case 'm':
                     options->show_modified = 1;
+                    break;
+                case 'a':
+                    options->show_staged = 1;
                     break;
                 case '%':
                     break;
@@ -184,6 +188,10 @@ print_result(vccontext_t *context, options_t *options, result_t *result)
                 case 'm':
                     if (result->modified)
                         putc('+', stdout);
+                    break;
+                case 'a':
+                    if (result->staged)
+                        putc('*', stdout);
                     break;
                 case '%':               /* escaped % */
                     putc('%', stdout);
@@ -288,6 +296,7 @@ main(int argc, char** argv)
         .show_revision = 0,
         .show_unknown  = 0,
         .show_modified = 0,
+        .show_staged   = 0,
         .show_features = 0,
     };
 

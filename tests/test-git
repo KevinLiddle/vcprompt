@@ -75,6 +75,19 @@ test_no_unknown()
     posttest
 }
 
+# "%a" expands to nothing if no staged files
+test_staged_files()
+{
+    pretest
+    touch testing
+    git add testing
+    assert_vcprompt "staged" "master*" "%b%a"
+    git reset -q --hard HEAD
+    assert_vcprompt "staged" "master" "%b%a"
+    posttest
+}
+
+
 check_git
 find_vcprompt
 find_gitrepo
@@ -86,5 +99,6 @@ failed=""
 test_basics
 test_no_modified
 test_no_unknown
+test_staged_files
 
 report

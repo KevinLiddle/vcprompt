@@ -20,6 +20,7 @@ typedef struct {
     int show_patch;                     /* show patch name? */
     int show_unknown;                   /* show ? if unknown files? */
     int show_modified;                  /* show + if local changes? */
+    int show_staged;                    /* show * if local staged changes? */
     unsigned int timeout;               /* timeout in milliseconds */
     int show_features;                  /* list builtin features */
 } options_t;
@@ -34,6 +35,7 @@ typedef struct {
     char *patch;                        /* name of current patch */
     int unknown;                        /* any unknown files? */
     int modified;                       /* any local changes? */
+    int staged;                         /* any local staged changes? */
 
     /* revision ID in VC-specific, not-necessarily-human-readable form */
     void *full_revision;
